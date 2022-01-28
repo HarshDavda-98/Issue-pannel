@@ -3,8 +3,10 @@ import {useSelector,useDispatch} from 'react-redux'
 import {loadUsers,signUsers} from '../../redux/Action'
 function Info() {
     const dispatch = useDispatch()
-    const list = useSelector( state=>state.data.users); //
-    const listss =useSelector(state=>state.data.user)
+    const list = useSelector( state=>state.data.users); 
+    const listss =useSelector(state=>state.data.user);  
+    console.log(list);
+    console.log(listss);
 
     useEffect(()=>{
         dispatch(loadUsers())

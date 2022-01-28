@@ -28,6 +28,12 @@ function LoginForm() {
           sessionStorage.setItem("email", ele.email);
           document.title = `${sessionStorage.getItem("username")}`;
            }
+           if(ele.user_type === "User"){
+            history("/adduser");
+           }
+           if(ele.user_type === "Admin"){
+            history("/Issuelist");
+           }
            return true;
       });
     }

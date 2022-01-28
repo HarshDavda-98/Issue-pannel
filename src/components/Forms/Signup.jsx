@@ -1,9 +1,9 @@
-import React, { useState } from "react";
+import React, { useState,useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useDispatch,useSelector } from "react-redux";
 import axios from "axios";
 import { ActionTypes } from "../../redux/Actiotypes";
-// import {loadUsers,signUsers} from '../../redux/Action'
+import {loadUsers,signUsers} from '../../redux/Action'
 
 function Signup() {
   const history = useNavigate();
@@ -17,10 +17,15 @@ function Signup() {
     password: "",
     re_password: "",
   });
+  useEffect(()=>{
+    dispatch(loadUsers())
+    dispatch(signUsers())
+},[dispatch]);
   const { email, password, re_password, username, user_type } = states; 
   const listss =useSelector(state=>state.data.user)     //using state from store
   const user = listss?.find(user => user.email === states.email); //check if input email === db.json email
-  
+  console.log(listss)
+  // console.log(user)
   const onchangehandler = (e) => {
     let { name, value } = e.target;
     setState({

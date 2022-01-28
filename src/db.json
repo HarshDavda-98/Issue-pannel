@@ -1,111 +1,37 @@
 {
   "user": [
     {
-      "usertype": "Bug",
-      "name": "harsh2021 ",
-      "title": "Related to javascript........",
-      "discrip": "<p>// Instead of using this</p><p>&nbsp; &nbsp; &nbsp; &nbsp; if (iAmHungry) {</p><p>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; bakeAnEgg()</p><p>\n}</p><p>\n// You can use this\n</p><p>if (iAmHungry) bakeAnEgg()\n</p><p>// Or this\n</p><p>iAmHungry? bakeAnEgg() : 0</p>",
-      "id": 1643184362935,
-      "images": ""
-    },
-    {
-      "usertype": "Discuss",
+      "issuetype": "Solved",
+      "title": "Image upload task .....",
+      "discrip": "<p>Solution Given</p>",
       "name": "harsh2021",
-      "title": "My map function is not working.....",
-      "discrip": "<h2>Arr?.map()</h2>",
-      "id": 1643191178698,
-      "images": ""
+      "id": 1643370775671,
+      "images": "Screenshot from 2022-01-28 17-11-35.png"
     },
     {
-      "usertype": "Unconfirmed",
-      "name": "harsh",
-      "title": "react bootstrap ",
-      "discrip": "<p>Can't access the components&nbsp;</p>",
-      "id": 1643191408820,
-      "images": ""
-    },
-    {
-      "usertype": "Solved",
-      "name": "harsh",
-      "title": "React dev tools extenson...",
-      "discrip": "<p><strong>Dev tool was not working</strong></p><figure class=\"table\"><table><tbody><tr><td>window .devtools extension link was provided……</td></tr></tbody></table></figure><p>&nbsp;</p><p>&nbsp;</p>",
-      "id": 1643191536383,
-      "images": ""
-    },
-    {
-      "usertype": "In_Progress",
-      "name": "harsh",
-      "title": "node js ",
-      "discrip": "<h2>trying to install nodejs v-17 but not working properly</h2>",
-      "id": 1643191698541,
-      "images": ""
-    },
-    {
-      "usertype": "Discuss",
-      "name": "kenil",
-      "title": "Image uploads",
-      "discrip": "<p>I am not able to upload images using ckeditor</p>",
-      "id": 1643192566444,
-      "images": ""
-    },
-    {
-      "usertype": "Discuss",
-      "name": "kenil",
-      "title": "upload images ",
-      "discrip": "<p><strong>Ck editor not working</strong></p>",
-      "id": 1643192690338,
-      "images": ""
-    },
-    {
-      "usertype": "In_Progress",
-      "name": "kenil",
-      "title": "Json server",
-      "discrip": "<p><i>Not working&nbsp;</i></p>",
-      "id": 1643192936386,
-      "images": ""
-    },
-    {
-      "usertype": "Bug",
-      "name": "Harsh",
-      "title": "My image is not uploadin",
-      "discrip": "<p><strong>My image is not uploaded……</strong></p>",
-      "image": "",
-      "id": 1643261786222,
-      "images": "Screenshot from 2022-01-06 13-33-31.png"
-    },
-    {
-      "usertype": "Bug",
-      "name": "harsh",
-      "title": "Sign up email exists problem Solution",
-      "discrip": "<p>if (!email || !password || !re_password || !username || !user_type) {</p><p>setErrors(\"Please add all data \");</p><p>}</p><p>if (states.password !== states.re_password) {</p><p>setErrors(\"Please check New password .....\");</p><p>}</p><p>if(user){</p><p>setErrors(\"Please enter another Email address .....\");</p><p>}</p><p>else {</p><p>&nbsp;</p><p>setErrors(\"\");</p><p>history(\"/\");</p><p>dispatch(Signupdata(states));</p><p>}</p>",
-      "image": "",
-      "id": 1643349621514
-    },
-    {
-      "usertype": "Bug",
-      "name": "harsh",
-      "title": "heyyyyy",
-      "discrip": "<p><strong>dfssfsfdfsf</strong></p>",
-      "image": "",
-      "id": 1643349843490
+      "issuetype": "Discuss",
+      "title": "Sign up validation....",
+      "discrip": "<p>if (!email || !password || !re_password || !username || !user_type) {</p><p>setErrors(\"Please add all data \");</p><p>}</p><p>if (states.password !== states.re_password) {</p><p>setErrors(\"Please check New password .....\");</p><p>}</p><p>if(user){</p><p>setErrors(\"Please enter another Email address .....\");</p><p>}</p><p>else {</p><p>setErrors(\"\");</p><p>history(\"/\");</p><p>dispatch(Signupdata(states));</p><p>}</p><p>};</p>",
+      "name": "Kenil",
+      "id": 1643370930934
     }
   ],
   "signup": [
     {
-      "id": 1643349511090,
+      "id": 1643366746159,
       "username": "harsh2021",
       "user_type": "User",
       "email": "harshdavda99@gmail.com",
-      "password": "123",
-      "re_password": "123"
+      "password": "1",
+      "re_password": "1"
     },
     {
-      "id": 1643350272606,
-      "username": "harsh",
+      "id": 1643370866199,
+      "username": "Kenil",
       "user_type": "User",
-      "email": "harshdavda789799@gmail.com",
-      "password": "123",
-      "re_password": "145"
+      "email": "Kenil@gmail.com",
+      "password": "1",
+      "re_password": "1"
     }
   ]
 }

@@ -1,7 +1,7 @@
 import React from "react";
 
 function Profiledata() {
-  var usertype = sessionStorage.getItem("user type");   //usertype from session storage
+  var issuetype = sessionStorage.getItem("user type");   //issuetype from session storage
   var email = sessionStorage.getItem("email");          //useremail from session storage
   var username = sessionStorage.getItem("username");    //username from session storage
   document.title = `${username}`;                       //changing title of the website
@@ -14,7 +14,7 @@ function Profiledata() {
 
         <ul className="list-group list-group-flush">
           <li className="list-group-item">
-            UserType:<span className="text-primary mx-3 ">{usertype}</span>
+          User Type:<span className="text-primary mx-3 ">{issuetype}</span>
           </li>
           <li className="list-group-item">
             UserName:<span className="text-primary mx-3 ">{username}</span>
