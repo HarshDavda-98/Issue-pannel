@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import Data from "../../db.json";
 function LoginForm() {
-  const datas = Data.signup;
+  const datas = Data.signup;    //data from db.json
   const [state, setState] = useState({ email: "", password: "" });
   const [error, setError] = useState("");
   const { email, password } = state;
@@ -20,13 +20,15 @@ function LoginForm() {
       setError("Please enter Email ");
     } else {
       datas?.map((ele) => {
-        if (ele.email === state.email && ele.password === state.password) {
-          history("/adduser");
+         if (ele.email === state.email && ele.password === state.password) 
+         {
+           history("/adduser")
           sessionStorage.setItem("username", ele.username);
           sessionStorage.setItem("user type", ele.user_type);
           sessionStorage.setItem("email", ele.email);
           document.title = `${sessionStorage.getItem("username")}`;
-        }
+           }
+           return true;
       });
     }
 

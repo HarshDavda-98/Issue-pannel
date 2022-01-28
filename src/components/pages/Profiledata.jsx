@@ -1,10 +1,10 @@
 import React from "react";
 
 function Profiledata() {
-  var usertype = sessionStorage.getItem("user type");
-  var email = sessionStorage.getItem("email");
-  var username = sessionStorage.getItem("username");
-  document.title = `${username}`;
+  var usertype = sessionStorage.getItem("user type");   //usertype from session storage
+  var email = sessionStorage.getItem("email");          //useremail from session storage
+  var username = sessionStorage.getItem("username");    //username from session storage
+  document.title = `${username}`;                       //changing title of the website
   return (
     <div className="card container-fluid " style={{ width: "18rem" }}>
       {/* <img src="..." className="card-img-top" alt="MyProfile" />     */}

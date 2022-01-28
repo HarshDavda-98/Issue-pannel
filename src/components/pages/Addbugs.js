@@ -3,11 +3,11 @@ import { useDispatch } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 import { ActionTypes } from "../../redux/Actiotypes";
-import My_Profile from "../pages/My_Profile";
+import MyProfile from "../pages/My_Profile";
 import Editotrs from "../../components/Forms/Editors";
 
 const Addbugs = () => {
-  const history = useNavigate();
+  const history = useNavigate();         // same as link to route the page
   const [addData, setAdd] = useState("");
   const [inputstates, setState] = useState({
     usertype: "",
@@ -15,12 +15,12 @@ const Addbugs = () => {
     title: "",
     discrip: "",
     image: "",
-    id: new Date().getTime(),
+    id: new Date().getTime(),             //for unique id
   });
 
   const [errors, setErrors] = useState();
-  let dispatch = useDispatch();
-  const { id, usertype, name, title, discrip, images } = inputstates;
+  let dispatch = useDispatch();           //for dispatching action 
+  const { id, usertype, name, title, discrip } = inputstates;   //destructuring inputstate...
 
   const handleinputchange = (e) => {
     let { name, value } = e.target;
@@ -38,17 +38,12 @@ const Addbugs = () => {
     return function (dispatch) {
       axios.post("http://localhost:5100/user", inputstates).then((response) => {
         dispatch(AddUsers());
-        console.log("hello");
         setState("");
       });
-      // dispatch(AddUsers());
     };
   };
   const imageChange = (e) => {
-    if (e.target.files && e.target.files.length > 0) {
-      console.log("image link", e.target.files[0].name);
-      // const imgurl = window.URL.createObjectURL(e.target.files[0])
-      // console.log("imgurl=====>",e.target.files[0].name);
+    if (e.target.files && e.target.files.length > 0) {  // if the length is greater then zero then file is to be added   
       setState({ ...inputstates, images: e.target.files[0].name });
     }
   };
@@ -60,7 +55,6 @@ const Addbugs = () => {
       dispatch(AddUser(inputstates));
       setErrors("");
       history("/mainform");
-      //   console.log(dispatch(AddUser(inputstates)));
     }
   };
 
@@ -87,7 +81,7 @@ const Addbugs = () => {
                 Go to list
               </button>
             </Link>
-            {<My_Profile />}
+            {<MyProfile/>}
           </form>
         </div>
       </nav>
@@ -135,7 +129,6 @@ const Addbugs = () => {
         <div className="container text-center">
           {errors && <h1 className="text-danger">{errors}</h1>}
         </div>
-
         <label className="form-label m-3 "  >Link:</label>
         <input
           type="file"
@@ -144,10 +137,10 @@ const Addbugs = () => {
         />
         {
           <Editotrs
-            setState={setState}
-            addData={addData}
-            inputstates={inputstates}
-            setAdd={setAdd}
+            setState={setState}       //passing function setstate as a props
+            addData={addData}         //passing state value as a props
+            inputstates={inputstates} //passing state value as a props
+            setAdd={setAdd}           //passing function setstate as a props
           />
         }
         <div className="container-fluid text-center mt-4">

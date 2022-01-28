@@ -1,16 +1,11 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { useDispatch } from "react-redux";
+import { useDispatch,useSelector } from "react-redux";
 import axios from "axios";
 import { ActionTypes } from "../../redux/Actiotypes";
-import Data from "../../db.json";
+// import {loadUsers,signUsers} from '../../redux/Action'
 
 function Signup() {
-  const data = Data.signup;
-  var list = data?.map((item, index) => {
-    return <p key={index}>{item.email}</p>;
-  });
-  console.log(list);
   const history = useNavigate();
   const [errors, setErrors] = useState("");
   const dispatch = useDispatch();
@@ -22,8 +17,10 @@ function Signup() {
     password: "",
     re_password: "",
   });
-  const { email, password, re_password, username, user_type } = states;
-
+  const { email, password, re_password, username, user_type } = states; 
+  const listss =useSelector(state=>state.data.user)     //using state from store
+  const user = listss?.find(user => user.email === states.email); //check if input email === db.json email
+  
   const onchangehandler = (e) => {
     let { name, value } = e.target;
     setState({
@@ -31,7 +28,7 @@ function Signup() {
       [name]: value,
     });
   };
-  const signUp = (res) => ({
+  const signUp = () => ({
     type: ActionTypes.SIGN_UP,
   });
 
@@ -44,11 +41,9 @@ function Signup() {
           setState("");
         })
         .catch(function (err) {
-          console.log(err);
         });
     };
   };
-
   const handlesubmit = (e) => {
     e.preventDefault();
     if (!email || !password || !re_password || !username || !user_type) {
@@ -56,20 +51,14 @@ function Signup() {
     }
     if (states.password !== states.re_password) {
       setErrors("Please check New password .....");
-    } else {
-      [...data]?.find((ele) => {
-        if (ele.email === states.email) {
-          setErrors("Please email alreadty .....");
-          console.log(states.email);
-          console.log("api data", ele.email);
-        } else {
+    }
+    if(user){
+      setErrors("Please enter another Email address .....");
+    }
+    else {
           setErrors("");
           history("/");
           dispatch(Signupdata(states));
-          // return false
-        }
-        // return false
-      });
     }
   };
   return (

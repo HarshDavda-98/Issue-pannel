@@ -7,7 +7,7 @@ function Dashboard() {
     <div>
       <nav className=" container-fluid navbar navbar-dark bg-dark">
         <div className="container-fluid ">
-          <a className="navbar-brand">Issue to Debug</a>
+          <p className="navbar-brand">Issue to Debug</p>
           <form className="d-flex ">
             <Link to={"/signup"}>
               <button className="btn btn-outline-light m-2" type="button">
@@ -31,14 +31,12 @@ function Dashboard() {
           />
         </div>
         <div className=" container-fluid border border-5  pt-4 ">
-          {" "}
-          {<Login />}{" "}
+          {<Login />}    
         </div>
       </div>
-
       <div className="container-fluid bg-primary text-center mb-2 mt-2 p-5">
         <div className=" example1 container-fluid bg-primary ">
-          <h3> Login or SignUp for new account ..... </h3>
+          <h3> Login or SignUp for the new account ..... </h3>
         </div>
       </div>
     </div>

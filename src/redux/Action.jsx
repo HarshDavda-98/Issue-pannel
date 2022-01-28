@@ -3,34 +3,31 @@ import axios from "axios";
 
 const getUsers = (users) => ({
   type: ActionTypes.GET_USERS,
-  payload: users,
+  payload: users,              //stores the data to users......
 });
-// export default getUsers;
 
 export const loadUsers = () => {
   return function (dispatch) {
     axios
-      .get("http://localhost:5100/user")
+      .get("http://localhost:5100/user")   // if we use get then payload is given to the parameter passed in function
       .then((response) => {
         dispatch(getUsers(response.data));
-        console.log("hello");
       })
       .catch((error) => console.log(error));
   };
 };
-const sihnupUsers = (users) => ({
+const sihnupUsers = (user) => ({
   type: ActionTypes.SIGN_UP,
-  payload: users,
+  payload: user,               //stores the data to users......
 });
 // export default sihnupUsers;
 
 export const signUsers = () => {
   return function (dispatch) {
     axios
-      .get("http://localhost:5100/signup")
+      .get("http://localhost:5100/signup")   // if we use get then payload is given to the parameter passed in function
       .then((response) => {
         dispatch(sihnupUsers(response.data));
-        console.log("hello");
       })
       .catch((error) => console.log(error));
   };

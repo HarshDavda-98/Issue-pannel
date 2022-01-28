@@ -1,24 +1,24 @@
 import { Link } from "react-router-dom";
 import React, { useState } from "react";
-import My_Profile from "../pages/My_Profile";
+import MyProfile from "../pages/My_Profile";
 import Issuelist from "./Issuelist";
 import List from "../../db.json";
 function MainForm() {
   const lists = List.user;
   const [items, setItems] = useState(lists);
 
-  const allitems = (type) => {
+  const allitems = (type) => {                    //show all data using filter....
     const updatedItem = lists.filter((curele) => {
       return curele.usertype !== type;
     });
-    setItems(updatedItem);
+    setItems(updatedItem);                      //calling setitems  in order to display data...
   };
 
-  const filterItem = (type) => {
+  const filterItem = (type) => {                //filtering each data according to parameter passed
     const updatedItem = lists.filter((curele) => {
       return curele.usertype === type;
     });
-    setItems(updatedItem);
+    setItems(updatedItem);                  //calling setitems  in order to display data... 
   };
   return (
     <div className="App container-fluid">
@@ -30,7 +30,7 @@ function MainForm() {
             <Link to={"/"}>
               <button
                 onClick={() => {
-                  sessionStorage.clear();
+                  sessionStorage.clear();       //clearing profile data when log out is clicked
                 }}
                 className="btn btn-outline-light m-2"
                 type="button"
@@ -106,7 +106,7 @@ function MainForm() {
                 </ul>
               </div>
             </div>
-            {<My_Profile></My_Profile>}
+            {<MyProfile></MyProfile>}
           </form>
         </div>
       </nav>
