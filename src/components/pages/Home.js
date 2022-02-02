@@ -1,12 +1,15 @@
 import React,{useEffect} from 'react';
 import {useSelector,useDispatch} from 'react-redux'
 import {loadUsers,signUsers} from '../../redux/Action'
+import Data from "../../db.json"
 function Info() {
     const dispatch = useDispatch()
+    const database = Data.signup;
+    console.log("This is signup ",database)
     const list = useSelector( state=>state.data.users); 
     const listss =useSelector(state=>state.data.user);  
-    console.log(list);
-    console.log(listss);
+    // console.log(list);
+    // console.log(listss);
 
     useEffect(()=>{
         dispatch(loadUsers())
@@ -55,6 +58,7 @@ function Info() {
                 </tr>
             </thead>
             <tbody>
+                
                {lists}
                {listsss}
             </tbody>

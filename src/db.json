@@ -1,37 +1,68 @@
 {
   "user": [
     {
-      "issuetype": "Solved",
-      "title": "Image upload task .....",
-      "discrip": "<p>Solution Given</p>",
+      "issuetype": "Discuss",
+      "title": "Input type ",
+      "discrip": "<p>&lt;input type=\"file\" &nbsp;<strong>value=\"Images\"</strong>&gt;&lt;/input&gt;&nbsp;</p><p>Here i can't give value to the input …..</p><p>Please give me solution for that…..&nbsp;</p>",
       "name": "harsh2021",
-      "id": 1643370775671,
+      "id": 1643722476953
+    },
+    {
+      "issuetype": "Unconfirmed",
+      "title": "Signup",
+      "discrip": "<p>Use this for signup Validation…..</p>",
+      "name": "harsh2021",
+      "id": 1643722679008,
       "images": "Screenshot from 2022-01-28 17-11-35.png"
     },
     {
-      "issuetype": "Discuss",
-      "title": "Sign up validation....",
-      "discrip": "<p>if (!email || !password || !re_password || !username || !user_type) {</p><p>setErrors(\"Please add all data \");</p><p>}</p><p>if (states.password !== states.re_password) {</p><p>setErrors(\"Please check New password .....\");</p><p>}</p><p>if(user){</p><p>setErrors(\"Please enter another Email address .....\");</p><p>}</p><p>else {</p><p>setErrors(\"\");</p><p>history(\"/\");</p><p>dispatch(Signupdata(states));</p><p>}</p><p>};</p>",
-      "name": "Kenil",
-      "id": 1643370930934
+      "issuetype": "Solved",
+      "title": "SignUp Validation...",
+      "discrip": "<p>if (!email || !password || !re_password || !username || !user_type) {</p><p>setErrors(\"Please add all data \");</p><p>} else if (states.password !== states.re_password) {</p><p>setErrors(\"Please check New password .....\");</p><p>} else if (user) {</p><p>setErrors(\"Please enter another Email address .....\");</p><p>} else if (reptedusename) {</p><p>setErrors(</p><p>` username not available as ..... ${reptedusename.username}.....`</p><p>);</p><p>} else {</p><p>setErrors(\"\");</p><p>history(\"/\");</p><p>dispatch(Signupdata(states));</p><p>}</p>",
+      "name": "harsh",
+      "id": 1643722782591
     }
   ],
   "signup": [
     {
-      "id": 1643366746159,
+      "id": 1643722464068,
       "username": "harsh2021",
       "user_type": "User",
       "email": "harshdavda99@gmail.com",
-      "password": "1",
-      "re_password": "1"
+      "password": "123",
+      "re_password": "123"
     },
     {
-      "id": 1643370866199,
-      "username": "Kenil",
+      "id": 1643722763557,
+      "username": "harsh",
       "user_type": "User",
-      "email": "Kenil@gmail.com",
-      "password": "1",
-      "re_password": "1"
+      "email": "harshdavda99@gmail.com123",
+      "password": "123",
+      "re_password": "123"
+    },
+    {
+      "id": 1643723238567,
+      "username": "Mr ...",
+      "user_type": "Admin",
+      "email": "mr@gmail.com",
+      "password": "123",
+      "re_password": "123"
+    },
+    {
+      "id": 1643778237085,
+      "username": "Raj2021",
+      "user_type": "User",
+      "email": "raj@gmail.com",
+      "password": "123",
+      "re_password": "123"
+    },
+    {
+      "id": 1643778426004,
+      "username": "Kenil2021",
+      "user_type": "Admin",
+      "email": "kenil@gamil.com",
+      "password": "123",
+      "re_password": "123"
     }
   ]
 }

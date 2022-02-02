@@ -6,10 +6,10 @@ function Profiledata() {
   var username = sessionStorage.getItem("username");    //username from session storage
   document.title = `${username}`;                       //changing title of the website
   return (
-    <div className="card container-fluid " style={{ width: "18rem" }}>
+    <div className="card container-fluid  bg-info"  style={{ width: "25rem"  }}>
       {/* <img src="..." className="card-img-top" alt="MyProfile" />     */}
       <div className="card-body container">
-        <h5 className="card-title text-primary fs-2">Your Profile.</h5>
+        <h5 className="card-title text-light fs-2 px-4">Your Profile.</h5>
         <hr></hr>
 
         <ul className="list-group list-group-flush">

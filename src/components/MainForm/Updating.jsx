@@ -1,27 +1,22 @@
 import React, { useState } from "react";
 import { useDispatch } from "react-redux";
-import { Link, useNavigate } from "react-router-dom";
+import {useNavigate } from "react-router-dom";
 import axios from "axios";
 import { ActionTypes } from "../../redux/Actiotypes";
-import MyProfile from "../pages/My_Profile";
-import Editotrs from "../../components/Forms/Editors";
+import Editotrs from "../Forms/Editors";
 
-const Addbugs = () => {
-  var issue = sessionStorage.getItem("username"); 
+const   Updating = (props) => {
+    var issue = sessionStorage.getItem("username"); 
   console.log(issue)
   const history = useNavigate(); // same as link to route the page
-  const [addData, setAdd] = useState("");
-  const [inputstates, setState] = useState({
-    issuetype: "",
-    title: "",
-    discrip: "",
-    name:"",
-    id: new Date().getTime(), //for unique id
-  });
-
+  const inputstates = props.showForm;
+  const setState=props.setShowForm;
+  
   const [errors, setErrors] = useState();
   let dispatch = useDispatch(); //for dispatching action
-  const { id,name, issuetype, title, discrip } = inputstates; //destructuring inputstate...
+  const { id ,name,  issuetype,  title,  discrip } = inputstates; //destructuring inputstate...
+  const [addData, setAdd] = useState(inputstates.discrip);
+  console.log(addData)
 
   const handleinputchange = (e) => {
     let { name, value } = e.target;
@@ -37,7 +32,7 @@ const Addbugs = () => {
 
   const AddUser = (inputstates) => {
     return function (dispatch) {
-      axios.post("http://localhost:5100/user", inputstates).then((response) => {
+      axios.put(`http://localhost:5100/user/${inputstates.id}`, inputstates).then((response) => {
         dispatch(AddUsers());
         setState("");
       });
@@ -49,8 +44,10 @@ const Addbugs = () => {
       setState({ ...inputstates, images: e.target.files[0].name });
     }
   };
+
   const handlesubmit = (e) => {
     e.preventDefault();
+    props.setShoweditor(false);
     if (!title ||!name || !issuetype || !id || !discrip) {
       setErrors("Please add data");
     } else {
@@ -62,38 +59,14 @@ const Addbugs = () => {
 
   return (
     <div className="App">
-      {/* Nav Bar */}
-      <nav className=" container-fluid navbar navbar-dark bg-dark m-2">
-        <div className="container-fluid ">
-          <p className="navbar-brand">Issue to Debug</p>
-          <form className="d-flex ">
-            <Link to={"/"}>
-              <button
-                onClick={() => {
-                  sessionStorage.clear();
-                }}
-                className="btn btn-outline-light m-2"
-                type="button"
-              >
-                Log Out
-              </button>
-            </Link>
-            <Link to={"/mainform"}>
-              <button className="btn btn-outline-light m-2" type="button">
-                Go to list
-              </button>
-            </Link>
-            {<MyProfile />}
-          </form>
-        </div>
-      </nav>
-      {/* input tickets */}
       <form onSubmit={handlesubmit} className="container">
+          <p> Edit your Data:</p>
         <div className="border border-3 p-4 mt-4">
           <div className="mb-3  ">
-            <label className="form-label"> Status Type:</label>
+            <label className="form-lAddbugsabel"> Status Type:</label>
             <select
               name="issuetype"
+              value = { inputstates.issuetype}
               onChange={handleinputchange}
               className="form-select"
               aria-label="Default select example"
@@ -107,9 +80,9 @@ const Addbugs = () => {
             </select>
           </div>
           <div className="mb-3 d-flex border border-3  px-2 pt-2">
-          <label className="form-label px-2 ">User Name :</label>
+          {/* <label className="form-label px-2 ">User Name :</label> */}
         
-       <input type="checkbox" name="name" value={issue} onChange={handleinputchange} className="form-control form-check-input"/>
+       {/* <input type="checkbox" name="name" value={issue} onChange={handleinputchange} className="form-control form-check-input"/> */}
         </div>
           <div className="mb-3">
             <label className="form-label">Task Type:</label>
@@ -125,12 +98,14 @@ const Addbugs = () => {
           </div>
           <div className="container text-center">
             {errors && <h1 className="text-danger">{errors}</h1>}
-          </div>
+          </div>Issuelist
 
           <div className="border  border-3 mb-2 ">
             <label className="form-label m-3 ">Link:</label>
             <input
               type="file"
+            //   defaultValue={inputstates.images}
+            // value={inputstates.images === '' && inputstates.images}
               onChange={(e) => imageChange(e)}
               placeholder="select image"
             />
@@ -143,9 +118,10 @@ const Addbugs = () => {
               setAdd={setAdd} //passing function setstate as a props
             />
           }
+           
           <div className="container-fluid text-center mt-4">
             <button type="submit" className="btn btn-success">
-              Add to list
+               update ?
             </button>
           </div>
         </div>
@@ -153,4 +129,4 @@ const Addbugs = () => {
     </div>
   );
 };
-export default Addbugs;
+export default Updating;

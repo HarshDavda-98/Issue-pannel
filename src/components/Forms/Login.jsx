@@ -2,11 +2,12 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import Data from "../../db.json";
 function LoginForm() {
-  const datas = Data.signup;    //data from db.json
   const [state, setState] = useState({ email: "", password: "" });
   const [error, setError] = useState("");
   const { email, password } = state;
-  const history = useNavigate();
+  const history = useNavigate(); 
+  const datas = Data.signup;    //data from db.json
+  const setdatas = datas?.find((ele)=>(ele.email === state.email && ele.password === state.password) );
 
   const handlechange = (e) => {
     let { name, value } = e.target;
@@ -18,28 +19,19 @@ function LoginForm() {
       setError("Please enter  Password");
     } else if (!email) {
       setError("Please enter Email ");
-    } else {
-      datas?.map((ele) => {
-         if (ele.email === state.email && ele.password === state.password) 
-         {
-           history("/adduser")
-          sessionStorage.setItem("username", ele.username);
-          sessionStorage.setItem("user type", ele.user_type);
-          sessionStorage.setItem("email", ele.email);
-          document.title = `${sessionStorage.getItem("username")}`;
-           }
-           if(ele.user_type === "User"){
-            history("/adduser");
-           }
-           if(ele.user_type === "Admin"){
-            history("/Issuelist");
-           }
-           return true;
-      });
+    }else if (!setdatas){
+      setError("Please enter valid Email and Password");
+    } else  if(setdatas){
+     //  history("/adduser")
+     (setdatas.user_type === "User") ? history("/adduser"): history("/Issuelist") 
+     sessionStorage.setItem("username", setdatas.username);
+     sessionStorage.setItem("user type", setdatas.user_type);
+     sessionStorage.setItem("email", setdatas.email);
+     document.title = `${sessionStorage.getItem("username")}`;
+     setState("");
+     setError("")
     }
-
-    setState("");
-    setError("Please enter valid Email and Password");
+   
   };
 
   return (

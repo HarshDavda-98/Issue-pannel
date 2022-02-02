@@ -1,27 +1,22 @@
 import React, { useState } from "react";
 import { useDispatch } from "react-redux";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import { ActionTypes } from "../../redux/Actiotypes";
-import MyProfile from "../pages/My_Profile";
 import Editotrs from "../../components/Forms/Editors";
 
-const Addbugs = () => {
-  var issue = sessionStorage.getItem("username"); 
-  console.log(issue)
+function ModalForUpdatefunction(props) {
+  var issue = sessionStorage.getItem("username");
+  console.log(issue);
   const history = useNavigate(); // same as link to route the page
-  const [addData, setAdd] = useState("");
-  const [inputstates, setState] = useState({
-    issuetype: "",
-    title: "",
-    discrip: "",
-    name:"",
-    id: new Date().getTime(), //for unique id
-  });
+  const inputstates = props.showForm;
+  const setState = props.setShowForm;
 
   const [errors, setErrors] = useState();
   let dispatch = useDispatch(); //for dispatching action
-  const { id,name, issuetype, title, discrip } = inputstates; //destructuring inputstate...
+  const { id, name, issuetype, title, discrip } = inputstates; //destructuring inputstate...
+  const [addData, setAdd] = useState(inputstates.discrip);
+  console.log(addData);
 
   const handleinputchange = (e) => {
     let { name, value } = e.target;
@@ -37,10 +32,12 @@ const Addbugs = () => {
 
   const AddUser = (inputstates) => {
     return function (dispatch) {
-      axios.post("http://localhost:5100/user", inputstates).then((response) => {
-        dispatch(AddUsers());
-        setState("");
-      });
+      axios
+        .put(`http://localhost:5100/user/${inputstates.id}`, inputstates)
+        .then((response) => {
+          dispatch(AddUsers());
+          setState("");
+        });
     };
   };
   const imageChange = (e) => {
@@ -49,9 +46,11 @@ const Addbugs = () => {
       setState({ ...inputstates, images: e.target.files[0].name });
     }
   };
+
   const handlesubmit = (e) => {
     e.preventDefault();
-    if (!title ||!name || !issuetype || !id || !discrip) {
+    props.setShoweditor(false);
+    if (!title || !name || !issuetype || !id || !discrip) {
       setErrors("Please add data");
     } else {
       dispatch(AddUser(inputstates));
@@ -60,40 +59,33 @@ const Addbugs = () => {
     }
   };
 
+  const list = props.showForm;
+  console.log("This is modal data", list);
   return (
-    <div className="App">
-      {/* Nav Bar */}
-      <nav className=" container-fluid navbar navbar-dark bg-dark m-2">
-        <div className="container-fluid ">
-          <p className="navbar-brand">Issue to Debug</p>
-          <form className="d-flex ">
-            <Link to={"/"}>
-              <button
-                onClick={() => {
-                  sessionStorage.clear();
-                }}
-                className="btn btn-outline-light m-2"
-                type="button"
+    <>
+      <div
+        className="modal fade"
+        id="exampleModal"
+        tabIndex="-1"
+        aria-labelledby="exampleModalLabel"
+        aria-hidden="true"
+      >
+        <div className="modal-dialog">
+          <div className="modal-content " style={{ width: "50rem" }}>
+            <div className="modal-body">
+              <div
+                className="card container-fluid  "
+                style={{ width: "35rem" }}
               >
-                Log Out
-              </button>
-            </Link>
-            <Link to={"/mainform"}>
-              <button className="btn btn-outline-light m-2" type="button">
-                Go to list
-              </button>
-            </Link>
-            {<MyProfile />}
-          </form>
-        </div>
-      </nav>
-      {/* input tickets */}
+                <div className="App">
       <form onSubmit={handlesubmit} className="container">
+          <p> Edit your Data:</p>
         <div className="border border-3 p-4 mt-4">
           <div className="mb-3  ">
-            <label className="form-label"> Status Type:</label>
+            <label className="form-lAddbugsabel"> Status Type:</label>
             <select
               name="issuetype"
+              value = { inputstates.issuetype}
               onChange={handleinputchange}
               className="form-select"
               aria-label="Default select example"
@@ -106,11 +98,7 @@ const Addbugs = () => {
               <option value="In_Progress">In Progress</option>
             </select>
           </div>
-          <div className="mb-3 d-flex border border-3  px-2 pt-2">
-          <label className="form-label px-2 ">User Name :</label>
-        
-       <input type="checkbox" name="name" value={issue} onChange={handleinputchange} className="form-control form-check-input"/>
-        </div>
+          
           <div className="mb-3">
             <label className="form-label">Task Type:</label>
             <textarea
@@ -131,6 +119,8 @@ const Addbugs = () => {
             <label className="form-label m-3 ">Link:</label>
             <input
               type="file"
+            //   defaultValue={inputstates.images}
+            // value={inputstates.images === '' && inputstates.images}
               onChange={(e) => imageChange(e)}
               placeholder="select image"
             />
@@ -143,14 +133,31 @@ const Addbugs = () => {
               setAdd={setAdd} //passing function setstate as a props
             />
           }
+           
           <div className="container-fluid text-center mt-4">
             <button type="submit" className="btn btn-success">
-              Add to list
+               update ?
             </button>
           </div>
         </div>
       </form>
     </div>
+              </div>
+            </div>
+            <div className="modal-footer">
+              <button
+                type="button"
+                className="btn btn-secondary"
+                data-bs-dismiss="modal"
+              >
+                Close
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </>
   );
-};
-export default Addbugs;
+}
+
+export default ModalForUpdatefunction;

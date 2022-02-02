@@ -68,7 +68,7 @@ function MainForm() {
           </div>
         </div>
       </div>
-      <Issuelist itemlist={items} />
+      <Issuelist itemlist={items} lists={lists}/>
     </div>
   );
 }

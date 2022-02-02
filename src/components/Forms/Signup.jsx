@@ -1,9 +1,9 @@
-import React, { useState,useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { useDispatch,useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import axios from "axios";
 import { ActionTypes } from "../../redux/Actiotypes";
-import {loadUsers,signUsers} from '../../redux/Action'
+import { loadUsers, signUsers } from "../../redux/Action";
 
 function Signup() {
   const history = useNavigate();
@@ -17,14 +17,17 @@ function Signup() {
     password: "",
     re_password: "",
   });
-  useEffect(()=>{
-    dispatch(loadUsers())
-    dispatch(signUsers())
-},[dispatch]);
-  const { email, password, re_password, username, user_type } = states; 
-  const listss =useSelector(state=>state.data.user)     //using state from store
-  const user = listss?.find(user => user.email === states.email); //check if input email === db.json email
-  console.log(listss)
+  useEffect(() => {
+    dispatch(loadUsers());
+    dispatch(signUsers());
+  }, [dispatch]);
+  const { email, password, re_password, username, user_type } = states;
+  const listss = useSelector((state) => state.data.user); //using state from store
+  const user = listss?.find((user) => user.email === states.email);
+  const reptedusename = listss?.find(
+    (user) => user.username === states.username
+  ); //check if input email === db.json email
+  console.log(listss);
   // console.log(user)
   const onchangehandler = (e) => {
     let { name, value } = e.target;
@@ -45,25 +48,25 @@ function Signup() {
           dispatch(signUp(res.data));
           setState("");
         })
-        .catch(function (err) {
-        });
+        .catch(function (err) {});
     };
   };
   const handlesubmit = (e) => {
     e.preventDefault();
     if (!email || !password || !re_password || !username || !user_type) {
       setErrors("Please add all data ");
-    }
-    if (states.password !== states.re_password) {
+    } else if (states.password !== states.re_password) {
       setErrors("Please check New password .....");
-    }
-    if(user){
+    } else if (user) {
       setErrors("Please enter another Email address .....");
-    }
-    else {
-          setErrors("");
-          history("/");
-          dispatch(Signupdata(states));
+    } else if (reptedusename) {
+      setErrors(
+        ` username not available as  ..... ${reptedusename.username}.....`
+      );
+    } else {
+      setErrors("");
+      history("/");
+      dispatch(Signupdata(states));
     }
   };
   return (
@@ -77,7 +80,7 @@ function Signup() {
                 <button className="btn btn-outline-light  m-2" type="button">
                   Main Page
                 </button>
-              </Link>
+                d:   </Link>
             </form>
           </div>
         </nav>
