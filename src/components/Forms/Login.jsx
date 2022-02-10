@@ -1,13 +1,21 @@
-import React, { useState } from "react";
+import React, { useState,useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import Data from "../../db.json";
+import axios from "axios";
 function LoginForm() {
+  const [list ,setlist]= useState();
+  useEffect(()=>{
+    axios.get("http://localhost:5012/posts/dl")
+    .then((res)=>{
+        setlist(res.data);
+        // console.log(res.data)
+    })
+    .catch((err)=>{console.log("This is error for :",err)});
+},[]);
   const [state, setState] = useState({ email: "", password: "" });
   const [error, setError] = useState("");
   const { email, password } = state;
   const history = useNavigate(); 
-  const datas = Data.signup;    //data from db.json
-  const setdatas = datas?.find((ele)=>(ele.email === state.email && ele.password === state.password) );
+  const setdatas = list?.find((ele)=>(ele.email === state.email && ele.password === state.password));
 
   const handlechange = (e) => {
     let { name, value } = e.target;
@@ -22,12 +30,12 @@ function LoginForm() {
     }else if (!setdatas){
       setError("Please enter valid Email and Password");
     } else  if(setdatas){
-     //  history("/adduser")
      (setdatas.user_type === "User") ? history("/adduser"): history("/Issuelist") 
      sessionStorage.setItem("username", setdatas.username);
      sessionStorage.setItem("user type", setdatas.user_type);
      sessionStorage.setItem("email", setdatas.email);
      document.title = `${sessionStorage.getItem("username")}`;
+     window.location.reload(false);
      setState("");
      setError("")
     }

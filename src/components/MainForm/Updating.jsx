@@ -6,17 +6,15 @@ import { ActionTypes } from "../../redux/Actiotypes";
 import Editotrs from "../Forms/Editors";
 
 const   Updating = (props) => {
-    var issue = sessionStorage.getItem("username"); 
-  console.log(issue)
   const history = useNavigate(); // same as link to route the page
   const inputstates = props.showForm;
   const setState=props.setShowForm;
   
   const [errors, setErrors] = useState();
   let dispatch = useDispatch(); //for dispatching action
-  const { id ,name,  issuetype,  title,  discrip } = inputstates; //destructuring inputstate...
+  const { id ,name,  issuetype,  title,  discrip ,images} = inputstates; //destructuring inputstate...
   const [addData, setAdd] = useState(inputstates.discrip);
-  console.log(addData)
+  // console.log(addData)
 
   const handleinputchange = (e) => {
     let { name, value } = e.target;
@@ -32,7 +30,7 @@ const   Updating = (props) => {
 
   const AddUser = (inputstates) => {
     return function (dispatch) {
-      axios.put(`http://localhost:5100/user/${inputstates.id}`, inputstates).then((response) => {
+      axios.put(`http://localhost:5012/posts/bugs/${inputstates.id}`, fd ).then((response) => {
         dispatch(AddUsers());
         setState("");
       });
@@ -40,10 +38,17 @@ const   Updating = (props) => {
   };
   const imageChange = (e) => {
     if (e.target.files && e.target.files.length > 0) {
-      // if the length is greater then zero then file is to be added
-      setState({ ...inputstates, images: e.target.files[0].name });
+      setState({ ...inputstates, images: e.target.files[0]});
     }
   };
+  var fd = new FormData();
+   fd.append("images",inputstates.images)
+   fd.append("names",inputstates.name)
+   fd.append("title",inputstates.title)
+   fd.append("issuetype",inputstates.issuetype)
+   fd.append("id",inputstates.id)
+   fd.append("discrip",inputstates.discrip)
+
 
   const handlesubmit = (e) => {
     e.preventDefault();
@@ -104,8 +109,6 @@ const   Updating = (props) => {
             <label className="form-label m-3 ">Link:</label>
             <input
               type="file"
-            //   defaultValue={inputstates.images}
-            // value={inputstates.images === '' && inputstates.images}
               onChange={(e) => imageChange(e)}
               placeholder="select image"
             />

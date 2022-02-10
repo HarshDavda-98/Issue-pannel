@@ -25,42 +25,10 @@
   ],
   "signup": [
     {
-      "id": 1643722464068,
+      "id": 1644220166880,
       "username": "harsh2021",
       "user_type": "User",
       "email": "harshdavda99@gmail.com",
-      "password": "123",
-      "re_password": "123"
-    },
-    {
-      "id": 1643722763557,
-      "username": "harsh",
-      "user_type": "User",
-      "email": "harshdavda99@gmail.com123",
-      "password": "123",
-      "re_password": "123"
-    },
-    {
-      "id": 1643723238567,
-      "username": "Mr ...",
-      "user_type": "Admin",
-      "email": "mr@gmail.com",
-      "password": "123",
-      "re_password": "123"
-    },
-    {
-      "id": 1643778237085,
-      "username": "Raj2021",
-      "user_type": "User",
-      "email": "raj@gmail.com",
-      "password": "123",
-      "re_password": "123"
-    },
-    {
-      "id": 1643778426004,
-      "username": "Kenil2021",
-      "user_type": "Admin",
-      "email": "kenil@gamil.com",
       "password": "123",
       "re_password": "123"
     }

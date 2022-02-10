@@ -9,7 +9,7 @@ const getUsers = (users) => ({
 export const loadUsers = () => {
   return function (dispatch) {
     axios
-      .get("http://localhost:5100/user")   // if we use get then payload is given to the parameter passed in function
+      .get("http://localhost:5012/posts/bugs")   // if we use get then payload is given to the parameter passed in function
       .then((response) => {
         dispatch(getUsers(response.data));
       })
@@ -25,7 +25,7 @@ const sihnupUsers = (user) => ({
 export const signUsers = () => {
   return function (dispatch) {
     axios
-      .get("http://localhost:5100/signup")   // if we use get then payload is given to the parameter passed in function
+      .get("http://localhost:5012/posts/dl")   // if we use get then payload is given to the parameter passed in function
       .then((response) => {
         dispatch(sihnupUsers(response.data));
       })

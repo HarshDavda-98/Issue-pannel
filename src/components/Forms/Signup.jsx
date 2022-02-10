@@ -1,12 +1,13 @@
 import React, { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import axios from "axios";
 import { ActionTypes } from "../../redux/Actiotypes";
 import { loadUsers, signUsers } from "../../redux/Action";
 
 function Signup() {
   const history = useNavigate();
+  const [repeat, setRepeat] = useState();
   const [errors, setErrors] = useState("");
   const dispatch = useDispatch();
   const [states, setState] = useState({
@@ -18,16 +19,26 @@ function Signup() {
     re_password: "",
   });
   useEffect(() => {
+    axios
+      .get("http://localhost:5012/posts/dl")
+      .then((res) => {
+        setRepeat(res.data);
+        // console.log(res.data)
+      })
+      .catch((err) => {
+        console.log("This is error for :", err);
+      });
+
     dispatch(loadUsers());
     dispatch(signUsers());
   }, [dispatch]);
   const { email, password, re_password, username, user_type } = states;
-  const listss = useSelector((state) => state.data.user); //using state from store
-  const user = listss?.find((user) => user.email === states.email);
-  const reptedusename = listss?.find(
+  // const listss = useSelector((state) => state.data.user); //using state from store
+  const user = repeat?.find((user) => user.email === states.email);
+  const reptedusename = repeat?.find(
     (user) => user.username === states.username
   ); //check if input email === db.json email
-  console.log(listss);
+  console.log(repeat);
   // console.log(user)
   const onchangehandler = (e) => {
     let { name, value } = e.target;
@@ -43,7 +54,8 @@ function Signup() {
   const Signupdata = (states) => {
     return function (dispatch) {
       axios
-        .post("http://localhost:5100/signup", states)
+        // .post("http://localhost:5100/signup", states)
+        .post("http://localhost:5012/posts/dl", states)
         .then(function (res) {
           dispatch(signUp(res.data));
           setState("");
@@ -58,6 +70,7 @@ function Signup() {
     } else if (states.password !== states.re_password) {
       setErrors("Please check New password .....");
     } else if (user) {
+      alert("Please enter another Email address ");
       setErrors("Please enter another Email address .....");
     } else if (reptedusename) {
       setErrors(
@@ -80,7 +93,7 @@ function Signup() {
                 <button className="btn btn-outline-light  m-2" type="button">
                   Main Page
                 </button>
-                d:   </Link>
+              </Link>
             </form>
           </div>
         </nav>

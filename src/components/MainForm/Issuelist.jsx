@@ -1,24 +1,38 @@
-import React,{useState} from "react";
+import React,{useState ,useEffect } from "react";
 import axios from "axios";
 import Updating from "./Updating";
 import ModalForUpdate from "./ModalForUpdate";
-import ModalForUpdatefunction from "./ModalforUpdatefunction";
-// import {}
-
+// import {  useDispatch } from "react-redux";
+// import { loadUsers, signUsers } from "../../redux/Action";
 function Issuelist(props) {
-  const [showeditor ,setShoweditor]=useState(false);
-  const Issue = props.itemlist;
+
+  // const dispatch = useDispatch();
+  // useEffect(() => {
+  //   dispatch(loadUsers());
+  //   dispatch(signUsers());
+  // }, [dispatch]);
+
   const sign = props.lists;
+  // const [mylist,setList]= useState();
+  useEffect(()=>{
+        axios.get(`http://localhost:5012/posts/bugs`)
+ .then((res)=>{
+  // props.setRepeat(sign);
+})
+},[])
+
+const [showeditor ,setShoweditor]=useState(false);
+const Issue = props.itemlist;
+// console.log("Isslue list value",Issue);
+ 
   var issue = sessionStorage.getItem("user type");
   var names = sessionStorage.getItem("username") 
   const [showForm, setShowForm] = useState({});
   
   const signup = sign?.find((ele)=>(ele.name===names))
   const userdata = (signup?.name);
+
   
-
-
-
   const Editdata =(list)=>{
     console.log("Edit:",list);
     setShowForm(list)
@@ -27,22 +41,21 @@ function Issuelist(props) {
  
  
   const showModal =(list)=>{
-    console.log("Edit:",list);
+    // console.log("Edit:",list);
     setShowForm(list)
   }
  
  
  
  
-  const DeletBug =(Id)=>{
-    console.log("just");
-    axios.delete(`http://localhost:5100/user/${Id}`)
-    // console.log("Remove:",Id);
+  const DeletBug =async(Id)=>{
+     await axios.delete(`http://localhost:5012/posts/bugs/${Id}`)
   }
   
   return (
     
     <div className="row row-cols-1 row-cols-md-1 xg-1 container-fluid ">
+  
       {Issue?.map((list) => {
         return (
           <div className="col m-3 p-2" key={list.id}>
@@ -64,9 +77,9 @@ function Issuelist(props) {
                     />
                 </div>
                 <div className="img-fluid">
-                  {list.images ? (
-                    <img
-                    src={list.images}
+                  {list.images ?(
+                   <img
+                    src={`http://localhost:5012/uploads/${list.images}`}
                     className="img-fluid"
                     alt={list.title}
                     />
