@@ -40,12 +40,24 @@ function ModalForUpdatefunction(props) {
         });
     };
   };
-  const imageChange = (e) => {
-    if (e.target.files && e.target.files.length > 0) {
-      // if the length is greater then zero then file is to be added
-      setState({ ...inputstates, images: e.target.files[0].name });
-    }
+  const imageChange = async(e) => {
+    const data = e.target.files[0];
+    const images = await convertBase64(data);
+    setState({...inputstates,images:images});
   };
+  const convertBase64 = (data) => {
+    return new Promise((resolve, reject) => {
+      const filereader = new FileReader();
+      filereader.readAsDataURL(data);
+      filereader.onload = () => {
+        resolve(filereader.result);
+      };
+      filereader.onerror = (error) => {
+        reject(error);
+      };
+    });
+  };
+ 
 
   const handlesubmit = (e) => {
     e.preventDefault();
@@ -58,6 +70,14 @@ function ModalForUpdatefunction(props) {
       history("/mainform");
     }
   };
+  var fd = new FormData();
+  fd.append("images",inputstates.images)
+  fd.append("names",inputstates.name)
+  fd.append("title",inputstates.title)
+  fd.append("issuetype",inputstates.issuetype)
+  fd.append("id",inputstates.id)
+  fd.append("discrip",inputstates.discrip)
+
 
   const list = props.showForm;
   console.log("This is modal data", list);
@@ -121,8 +141,6 @@ function ModalForUpdatefunction(props) {
                         <label className="form-label m-3 ">Link:</label>
                         <input
                           type="file"
-                          //   defaultValue={inputstates.images}
-                          // value={inputstates.images === '' && inputstates.images}
                           onChange={(e) => imageChange(e)}
                           placeholder="select image"
                         />

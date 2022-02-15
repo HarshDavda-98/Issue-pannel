@@ -4,7 +4,7 @@ import {useNavigate } from "react-router-dom";
 import axios from "axios";
 import { ActionTypes } from "../../redux/Actiotypes";
 import Editotrs from "../Forms/Editors";
-
+// import MyProfile from "../pages/My_Profile";
 const   Updating = (props) => {
   const history = useNavigate(); // same as link to route the page
   const inputstates = props.showForm;
@@ -12,7 +12,7 @@ const   Updating = (props) => {
   
   const [errors, setErrors] = useState();
   let dispatch = useDispatch(); //for dispatching action
-  const { id ,name,  issuetype,  title,  discrip ,images} = inputstates; //destructuring inputstate...
+  const { id ,name,  issuetype,  title,  discrip } = inputstates; //destructuring inputstate...
   const [addData, setAdd] = useState(inputstates.discrip);
   // console.log(addData)
 
@@ -36,10 +36,22 @@ const   Updating = (props) => {
       });
     };
   };
-  const imageChange = (e) => {
-    if (e.target.files && e.target.files.length > 0) {
-      setState({ ...inputstates, images: e.target.files[0]});
-    }
+  const imageChange = async(e) => {
+    const data = e.target.files[0];
+    const images = await convertBase64(data);
+    setState({...inputstates,images:images});
+  };
+  const convertBase64 = (data) => {
+    return new Promise((resolve, reject) => {
+      const filereader = new FileReader();
+      filereader.readAsDataURL(data);
+      filereader.onload = () => {
+        resolve(filereader.result);
+      };
+      filereader.onerror = (error) => {
+        reject(error);
+      };
+    });
   };
   var fd = new FormData();
    fd.append("images",inputstates.images)
@@ -49,7 +61,7 @@ const   Updating = (props) => {
    fd.append("id",inputstates.id)
    fd.append("discrip",inputstates.discrip)
 
-
+   
   const handlesubmit = (e) => {
     e.preventDefault();
     props.setShoweditor(false);
@@ -63,6 +75,7 @@ const   Updating = (props) => {
   };
 
   return (
+    <>  
     <div className="App">
       <form onSubmit={handlesubmit} className="container">
           <p> Edit your Data:</p>
@@ -130,6 +143,8 @@ const   Updating = (props) => {
         </div>
       </form>
     </div>
+    </>
+
   );
 };
 export default Updating;

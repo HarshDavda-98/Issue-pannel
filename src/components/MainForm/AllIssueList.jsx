@@ -2,16 +2,26 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import Updating from "./Updating";
 import ModalForUpdate from "./ModalForUpdate";
-import {useNavigate} from 'react-router-dom'
-function Issuelist(props) {
+import { useNavigate } from "react-router-dom";
+function AllIssueList(props) {
+  const [updatestate,setupdateState]=useState([]);
+  const history = useNavigate();
   const sign = props.lists;
-  const history = useNavigate()
   useEffect(() => {
-    axios.get(`http://localhost:5012/posts/bugs`).then((res) => {});
+    axios.get(`http://localhost:5012/posts/bugs`)
+    .then((res) => {
+      console.log("Here is ", res.data);
+      const data = res.data;
+      setupdateState({
+        ...updatestate,data
+      });
+      console.log( "using state",data)
+      // console.log("updateState:",updatestate)
+    }).catch((err)=> console.log("Hellow",err))
   }, []);
 
   const [showeditor, setShoweditor] = useState(false);
-  const Issue = props.itemlist;
+  // const Issue = props.itemlist;
 
   var issue = sessionStorage.getItem("user type");
   var names = sessionStorage.getItem("username");
@@ -21,10 +31,10 @@ function Issuelist(props) {
   const userdata = signup?.name;
 
   const Editdata = (list) => {
-    // console.log("Edit:", list);
+    console.log("Edit:", list);
     setShowForm(list);
     setShoweditor(!showeditor);
-    history("/Updating")
+    // history("/Updating");
   };
 
   const showModal = (list) => {
@@ -33,11 +43,12 @@ function Issuelist(props) {
 
   const DeletBug = async (Id) => {
     await axios.delete(`http://localhost:5012/posts/bugs/${Id}`);
+    history("/adduser");
   };
 
   return (
     <div className="row row-cols-1 row-cols-md-1 xg-1 container-fluid ">
-      {Issue?.map((list) => {
+      {sign?.map((list) => {
         return (
           <div className="col m-3 p-2" key={list.id}>
             <div className="card">
@@ -67,7 +78,7 @@ function Issuelist(props) {
                     dangerouslySetInnerHTML={{ __html: list.discrip }}
                   />
                 </div>
-
+                    
                 <div className="">
                   <div className="mt-2 bg-success fs-4 text-light text-center px-5 my-2">
                     {list.issuetype}
@@ -131,9 +142,8 @@ function Issuelist(props) {
                       data-bs-toggle="modal"
                       data-bs-target="#exampleModal"
                     >
-                      {" "}
-                      Show Data{" "}
-                    </button>{" "}
+                      Show Data
+                    </button>
                     {/* <ModalForUpdatefunction setShowForm={setShowForm} showForm={showForm} setShoweditor={setShoweditor }  /> */}
                     <ModalForUpdate showForm={showForm} />
                   </div>
@@ -146,4 +156,4 @@ function Issuelist(props) {
     </div>
   );
 }
-export default Issuelist;
+export default AllIssueList;

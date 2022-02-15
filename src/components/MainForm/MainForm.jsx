@@ -5,33 +5,34 @@ import Issuelist from "./Issuelist";
 import axios from 'axios';
 import Filteusername from "./filteusername";
 import FilterByBug from "./Filterbybug";
-import ShowAlll from "./ShowAlll";
+// import ShowAlll from "./ShowAlll";
+import AllIssueList from "./AllIssueList";
 function MainForm() {
   const [lists, setRepeat] = useState([]);
+  const [AllData,setAllData]=useState(true);
   const history = useNavigate();
   const [items, setItems] = useState(lists);
-  // console.log("Hey",lists)
-  // console.log("Its undefine",items)
   var issue = sessionStorage.getItem("user type");   //issuetype from session storage
 
-  // useEffect(()=>{setItems(lists)},[])
-  const showData =(type)=>{
-    const updatedItem = lists.filter((curele) => {
-      return curele.issuetype !== type;
-    });
-    setItems(updatedItem);   
-  }
+  // const showData =(type)=>{
+  //   const updatedItem = lists.filter((curele) => {
+  //     return curele.issuetype !== type;
+  //   });
+  //   setItems(updatedItem);   
+  // }
   const allitems = (type) => {                    //show all data using filter....
     const updatedItem = lists.filter((curele) => {
       return curele.issuetype !== type;
     });
     setItems(updatedItem);                      //calling setitems  in order to display data...
+    setAllData(false);
   };
   const filteruser=(type)=>{
     const updatedItem = lists.filter((curele) => {
       return curele.name === type;
     });
-    setItems(updatedItem);  
+    setItems(updatedItem);
+    setAllData(false);  
   }
   
   const filterItem = (type) => {                //filtering each data according to parameter passed
@@ -39,6 +40,7 @@ function MainForm() {
       return curele.issuetype === type;
     });
     setItems(updatedItem);                  //calling setitems  in order to display data... 
+    setAllData(false);
   };
 
 useEffect(()=>{
@@ -46,8 +48,6 @@ useEffect(()=>{
   .get("http://localhost:5012/posts/bugs")
   .then((res) => {
     setRepeat(res.data);
-    // setItems()
-    // console.log(res.data)
   })
   .catch((err) => {
     console.log("This is error for :", err);
@@ -88,7 +88,7 @@ useEffect(()=>{
       <div className="container-fluid ">
         <div className="container-fluid">
           <div className="container d-flex">
-          <ShowAlll  showData={showData} />
+          {/* <ShowAlll  showData={showData} /> */}
             {(issue==="Admin")? "":
               <div className="container-fluid text-end mt-3  ">
                <Link to={"/adduser"}> <button type="button" className="btn btn-success">
@@ -99,11 +99,8 @@ useEffect(()=>{
           </div>
         </div>
       </div>
-      <Issuelist 
-      itemlist={items} 
-      setItems={setItems} 
-      setRepeat={setRepeat} 
-      lists={lists}/>
+    {!AllData?<Issuelist itemlist={items} setItems={setItems} setRepeat={setRepeat} lists={lists}/>
+    :<AllIssueList itemlist={items} setItems={setItems} setRepeat={setRepeat} lists={lists}/>}
     </div>
   );
 }

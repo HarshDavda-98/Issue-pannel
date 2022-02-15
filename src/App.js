@@ -5,15 +5,14 @@ import Signup from "./components/Forms/Signup";
 import { Routes, Route } from "react-router-dom";
 import Addbugs from "./components/pages/Addbugs";
 import Dashboard from "../src/components/Forms/Dashboard";
-// import Home from '../src/components/pages/Home'
 import Issuelist from "./components/MainForm/Issuelist";
 import Updating from "./components/MainForm/Updating";
 function App() {
   return (
     <>
       <Routes>
-        <Route path="/Updating" element={<Updating />} />
         <Route path="/" element={<Dashboard />} />
+        <Route path="/Updating" element={<Updating />} />
         <Route path="/signup" element={<Signup />} />
         <Route path="/login" element={<Login />} />
         <Route path="/mainform" element={<MainForm />} />

@@ -5,26 +5,24 @@ import axios from "axios";
 import { ActionTypes } from "../../redux/Actiotypes";
 import MyProfile from "../pages/My_Profile";
 import Editotrs from "../../components/Forms/Editors";
-// import {confirm} from "react-confirm-box"
-// import FileBases from 'react-file-base64'
+
 
 const Addbugs = () => {
-  var issue = sessionStorage.getItem("username"); 
-  // console.log(issue)
+  var issue = sessionStorage.getItem("username");
   const history = useNavigate(); // same as link to route the page
   const [addData, setAdd] = useState("");
   const [inputstates, setState] = useState({
     issuetype: "",
     title: "",
     discrip: "",
-    name:"",
-    images:"",
+    name: "",
+    images: "",
     id: new Date().getTime(), //for unique id
   });
 
   const [errors, setErrors] = useState();
   let dispatch = useDispatch(); //for dispatching action
-  const { id,name, issuetype, title, discrip ,images} = inputstates; //destructuring inputstate...
+  const { id, name, issuetype, title, discrip,images } = inputstates; //destructuring inputstate...
 
   const handleinputchange = (e) => {
     let { name, value } = e.target;
@@ -37,9 +35,8 @@ const Addbugs = () => {
   const AddUsers = () => ({
     type: ActionTypes.ADD_DATA,
   });
-  
 
-  const AddUser = (inputstates) => {
+  const AddUser = (fd) => {
     return function (dispatch) {
       axios.post("http://localhost:5012/posts/bugs", fd).then((response) => {
         dispatch(AddUsers());
@@ -47,39 +44,49 @@ const Addbugs = () => {
       });
     };
   };
-
-  const imageChange = (e) => {
-    if (e.target.files && e.target.files.length > 0) {
-      // if the length is greater then zero then file is to be added
-      setState({ ...inputstates, images: e.target.files[0]});
-    }
+  const imageChange = async(e) => {
+    const data = e.target.files[0];
+    const images = await convertBase64(data);
+    setState({...inputstates,images:images});
   };
-   var fd = new FormData();
-   fd.append("images",inputstates.images)
-   fd.append("names",inputstates.name)
-   fd.append("title",inputstates.title)
-   fd.append("issuetype",inputstates.issuetype)
-   fd.append("id",inputstates.id)
-   fd.append("discrip",inputstates.discrip)
+  const convertBase64 = (data) => {
+    return new Promise((resolve, reject) => {
+      const filereader = new FileReader();
+      filereader.readAsDataURL(data);
+      filereader.onload = () => {
+        resolve(filereader.result);
+      };
+      filereader.onerror = (error) => {
+        reject(error);
+      };
+    });
+  };
+ 
+  var fd = new FormData();
 
-  //  const { id,name, issuetype, title, discrip ,images} = inputstates;
+  fd.append("images", inputstates.images);
+  fd.append("names", inputstates.name);
+  fd.append("title", inputstates.title);
+  fd.append("issuetype", inputstates.issuetype);
+  fd.append("id", inputstates.id);
+  fd.append("discrip", inputstates.discrip);
 
   const handlesubmit = (e) => {
     e.preventDefault();
-    if (!title ||!name || !issuetype || !id || !discrip) {
+    if (!title || !name || !issuetype || !id || !discrip || !images) {
       setErrors("Please add data");
     } else {
-      dispatch(AddUser(inputstates));
+      dispatch(AddUser(fd));
       setErrors("");
       history("/mainform");
     }
   };
- 
+
   const onClicks = async () => {
     // const result = await confirm("Are you sure?", options);
-    if(window.confirm("are you sure you want to logout")){
+    if (window.confirm("are you sure you want to logout")) {
       sessionStorage.clear();
-      history("/")
+      history("/");
     }
   };
   return (
@@ -90,18 +97,18 @@ const Addbugs = () => {
           <p className="navbar-brand">Issue to Debug</p>
           <form className="d-flex ">
             {/* <Link to={"/"}> */}
-              <button
-                onClick={() => {
-                  sessionStorage.clear();
-                  onClicks();
-                  // confirm("Are you sure for logging out")
-                  // sessionStorage.getItem("username")
-                }}
-                className="btn btn-outline-light m-2"
-                type="button"
-              >
-                Log Out
-              </button>
+            <button
+              onClick={() => {
+                sessionStorage.clear();
+                onClicks();
+                // confirm("Are you sure for logging out")
+                // sessionStorage.getItem("username")
+              }}
+              className="btn btn-outline-light m-2"
+              type="button"
+            >
+              Log Out
+            </button>
             {/* </Link> */}
             <Link to={"/mainform"}>
               <button className="btn btn-outline-light m-2" type="button">
@@ -132,10 +139,16 @@ const Addbugs = () => {
             </select>
           </div>
           <div className="mb-3 d-flex border border-3  px-2 pt-2">
-          <label className="form-label px-2 ">User Name :</label>
-        
-       <input type="checkbox" name="name" value={issue} onChange={handleinputchange} className="form-control form-check-input"/>
-        </div>
+            <label className="form-label px-2 ">User Name :</label>
+
+            <input
+              type="checkbox"
+              name="name"
+              value={issue}
+              onChange={handleinputchange}
+              className="form-control form-check-input"
+            />
+          </div>
           <div className="mb-3">
             <label className="form-label">Task Type:</label>
             <textarea
@@ -159,13 +172,8 @@ const Addbugs = () => {
               onChange={(e) => imageChange(e)}
               placeholder="select image"
             />
-              {/* <FileBases
-              type="file"
-              multiple={false}
-              onDone={({ base64 }) =>
-                setState({ ...inputstates, images: base64 })
-              }
-            /> */}
+
+            
           </div>
           {
             <Editotrs

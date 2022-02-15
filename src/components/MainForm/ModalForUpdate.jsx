@@ -13,12 +13,12 @@ function ModalForUpdate(props) {
         aria-hidden="true"
       >
         <div className="modal-dialog">
-          <div className="modal-content " style={{ width: "50rem" }}>
+          <div className="modal-content ">
             <div className="modal-header"></div>
             <div className="modal-body">
               <div
                 className="card container-fluid  bg-info"
-                style={{ width: "35rem" }}
+                // style={{ width: "35rem" }}
               >
                 {/* <img src="..." className="card-img-top" alt="MyProfile" />     */}
                 <div className="card-body container">
@@ -43,7 +43,7 @@ function ModalForUpdate(props) {
                         <div className="img-fluid text-center bg-default ">
                           {list.images ? (
                             <img
-                              src={`http://localhost:5012/uploads/${list.images}`}
+                              src={list.images}
                               className="img-fluid"
                               alt={list.title}
                             />
