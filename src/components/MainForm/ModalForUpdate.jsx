@@ -22,7 +22,8 @@ function ModalForUpdate(props) {
               >
                 {/* <img src="..." className="card-img-top" alt="MyProfile" />     */}
                 <div className="card-body container">
-                  <h5 className="card-title text-light fs-2 px-5">
+                  <h5 className="card-title text-light fs-4 px-5">
+                    <span className="text-dark px-3">Written by:</span>
                     {list.name}
                   </h5>
                   <hr></hr>
@@ -39,23 +40,21 @@ function ModalForUpdate(props) {
                         </span>
                       </p>
                     </li>
-                    <li className="container-fluid bg-light">
-                        <div className="img-fluid text-center bg-default ">
-                          {list.images ? (
-                            <img
-                              src={list.images}
-                              className="img-fluid"
-                              alt={list.title}
-                            />
-                          ) : (
-                            ""
-                          )}
-                        </div>
+                    <li className="container-fluid bg-light ">
+                      <div className="img-fluid text-center bg-default  ">
+                        {list.images ? (
+                          <img
+                            src={list.images}
+                            className="img-fluid rounded-3 m-2"
+                            alt={list.title}
+                          />
+                        ) : (
+                          ""
+                        )}
+                      </div>
                     </li>
-
-
                     <li className="list-group-item">
-                      <div className=" container-fluid">
+                      <div className=" container-fluid border">
                         <p className="text-dark fs-4 px-2 "> Description: </p>
                         <p
                           className="card-text fs-4 mx-3 "
@@ -63,7 +62,6 @@ function ModalForUpdate(props) {
                         />
                       </div>
                     </li>
-                    
                   </ul>
                 </div>
               </div>

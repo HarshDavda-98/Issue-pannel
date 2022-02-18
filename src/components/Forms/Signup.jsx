@@ -4,8 +4,9 @@ import { useDispatch } from "react-redux";
 import axios from "axios";
 import { ActionTypes } from "../../redux/Actiotypes";
 import { loadUsers, signUsers } from "../../redux/Action";
-
+import {API} from '../../Api'
 function Signup() {
+  const url = `${API}posts/dl`;
   const history = useNavigate();
   const [repeat, setRepeat] = useState();
   const [errors, setErrors] = useState("");
@@ -20,7 +21,7 @@ function Signup() {
   });
   useEffect(() => {
     axios
-      .get("http://localhost:5012/posts/dl")
+      .get(url)
       .then((res) => {
         setRepeat(res.data);
         // console.log(res.data)
@@ -32,14 +33,11 @@ function Signup() {
     dispatch(loadUsers());
     dispatch(signUsers());
   }, [dispatch]);
-  const { email, password, re_password, username, user_type } = states;
+  const { email, password, re_password, username, user_type ,id } = states;
   // const listss = useSelector((state) => state.data.user); //using state from store
-  const user = repeat?.find((user) => user.email === states.email);
-  const reptedusename = repeat?.find(
-    (user) => user.username === states.username
-  ); //check if input email === db.json email
-  console.log(repeat);
-  // console.log(user)
+  // const user = repeat?.find((user) => user.email === states.email);
+  // const reptedusename = repeat?.find((user) => user.username === states.username); //check if input email === db.json email
+
   const onchangehandler = (e) => {
     let { name, value } = e.target;
     setState({
@@ -54,32 +52,29 @@ function Signup() {
   const Signupdata = (states) => {
     return function (dispatch) {
       axios
-        // .post("http://localhost:5100/signup", states)
-        .post("http://localhost:5012/posts/dl", states)
+        .post(url, states)
         .then(function (res) {
           dispatch(signUp(res.data));
+          history("/"); 
           setState("");
         })
-        .catch(function (err) {});
+        .catch((err)=>{
+          console.log(err);
+          // setErrors()
+        });
     };
   };
   const handlesubmit = (e) => {
     e.preventDefault();
-    if (!email || !password || !re_password || !username || !user_type) {
+    if (!email || !password || !re_password || !username || !user_type ||!id ) {
       setErrors("Please add all data ");
     } else if (states.password !== states.re_password) {
       setErrors("Please check New password .....");
-    } else if (user) {
-      alert("Please enter another Email address ");
-      setErrors("Please enter another Email address .....");
-    } else if (reptedusename) {
-      setErrors(
-        ` username not available as  ..... ${reptedusename.username}.....`
-      );
-    } else {
+    } 
+    else {
       setErrors("");
-      history("/");
-      dispatch(Signupdata(states));
+      
+      dispatch(Signupdata(states,setErrors("Please enter valid email")));
     }
   };
   return (

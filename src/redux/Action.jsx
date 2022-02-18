@@ -1,5 +1,6 @@
 import { ActionTypes } from "../redux/Actiotypes";
 import axios from "axios";
+import {API} from '../Api'
 
 const getUsers = (users) => ({
   type: ActionTypes.GET_USERS,
@@ -9,7 +10,7 @@ const getUsers = (users) => ({
 export const loadUsers = () => {
   return function (dispatch) {
     axios
-      .get("http://localhost:5012/posts/bugs")   // if we use get then payload is given to the parameter passed in function
+      .get(`${API}posts/bugs`)   // if we use get then payload is given to the parameter passed in function
       .then((response) => {
         dispatch(getUsers(response.data));
       })
@@ -25,7 +26,7 @@ const sihnupUsers = (user) => ({
 export const signUsers = () => {
   return function (dispatch) {
     axios
-      .get("http://localhost:5012/posts/dl")   // if we use get then payload is given to the parameter passed in function
+      .get(`${API}posts/dl`)   // if we use get then payload is given to the parameter passed in function
       .then((response) => {
         dispatch(sihnupUsers(response.data));
       })

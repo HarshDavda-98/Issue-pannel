@@ -1,12 +1,13 @@
 import React, { useState } from "react";
 import { useDispatch } from "react-redux";
-import {useNavigate } from "react-router-dom";
+// import {useNavigate } from "react-router-dom";
 import axios from "axios";
 import { ActionTypes } from "../../redux/Actiotypes";
 import Editotrs from "../Forms/Editors";
+import {API} from '../../Api'
 // import MyProfile from "../pages/My_Profile";
 const   Updating = (props) => {
-  const history = useNavigate(); // same as link to route the page
+  // const history = useNavigate(); // same as link to route the page
   const inputstates = props.showForm;
   const setState=props.setShowForm;
   
@@ -30,7 +31,7 @@ const   Updating = (props) => {
 
   const AddUser = (inputstates) => {
     return function (dispatch) {
-      axios.put(`http://localhost:5012/posts/bugs/${inputstates.id}`, fd ).then((response) => {
+      axios.put(`${API}posts/bugs/${inputstates.id}`, fd ).then((response) => {
         dispatch(AddUsers());
         setState("");
       });
@@ -65,12 +66,14 @@ const   Updating = (props) => {
   const handlesubmit = (e) => {
     e.preventDefault();
     props.setShoweditor(false);
+
     if (!title ||!name || !issuetype || !id || !discrip) {
       setErrors("Please add data");
     } else {
       dispatch(AddUser(inputstates));
       setErrors("");
-      history("/mainform");
+      // history("/mainform");
+      window.location.reload();
     }
   };
 

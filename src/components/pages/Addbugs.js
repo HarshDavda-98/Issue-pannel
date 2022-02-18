@@ -5,7 +5,7 @@ import axios from "axios";
 import { ActionTypes } from "../../redux/Actiotypes";
 import MyProfile from "../pages/My_Profile";
 import Editotrs from "../../components/Forms/Editors";
-
+import {API} from '../../Api'
 
 const Addbugs = () => {
   var issue = sessionStorage.getItem("username");
@@ -38,7 +38,7 @@ const Addbugs = () => {
 
   const AddUser = (fd) => {
     return function (dispatch) {
-      axios.post("http://localhost:5012/posts/bugs", fd).then((response) => {
+      axios.post(`${API}posts/bugs`, fd).then((response) => {
         dispatch(AddUsers());
         setState("");
       });
@@ -81,12 +81,13 @@ const Addbugs = () => {
       history("/mainform");
     }
   };
-
+  
   const onClicks = async () => {
     // const result = await confirm("Are you sure?", options);
     if (window.confirm("are you sure you want to logout")) {
       sessionStorage.clear();
       history("/");
+      window.location.reload(true);
     }
   };
   return (

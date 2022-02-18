@@ -7,6 +7,7 @@ import Filteusername from "./filteusername";
 import FilterByBug from "./Filterbybug";
 // import ShowAlll from "./ShowAlll";
 import AllIssueList from "./AllIssueList";
+import {API} from '../../Api'
 function MainForm() {
   const [lists, setRepeat] = useState([]);
   const [AllData,setAllData]=useState(true);
@@ -14,12 +15,6 @@ function MainForm() {
   const [items, setItems] = useState(lists);
   var issue = sessionStorage.getItem("user type");   //issuetype from session storage
 
-  // const showData =(type)=>{
-  //   const updatedItem = lists.filter((curele) => {
-  //     return curele.issuetype !== type;
-  //   });
-  //   setItems(updatedItem);   
-  // }
   const allitems = (type) => {                    //show all data using filter....
     const updatedItem = lists.filter((curele) => {
       return curele.issuetype !== type;
@@ -45,7 +40,7 @@ function MainForm() {
 
 useEffect(()=>{
   axios
-  .get("http://localhost:5012/posts/bugs")
+  .get(`${API}posts/bugs`)
   .then((res) => {
     setRepeat(res.data);
   })
@@ -59,6 +54,7 @@ useEffect(()=>{
     if(window.confirm("are you sure you want to logout")){
       sessionStorage.clear();
       history("/")  
+      window.location.reload();
     }
   };
   return (

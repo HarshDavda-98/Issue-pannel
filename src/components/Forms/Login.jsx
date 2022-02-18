@@ -1,10 +1,12 @@
 import React, { useState,useEffect } from "react";
+import {API} from '../../Api'
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 function LoginForm() {
   const [list ,setlist]= useState();
+  const url = `${API}posts/dl`
   useEffect(()=>{
-    axios.get("http://localhost:5012/posts/dl")
+    axios.get(url)
     .then((res)=>{
         setlist(res.data);
         // console.log(res.data)
@@ -23,6 +25,7 @@ function LoginForm() {
   };
   const handlesubmit = (e) => {
     e.preventDefault();
+    // console.log("Heyyy",setdatas)
     if (!password) {
       setError("Please enter  Password");
     } else if (!email) {
@@ -35,7 +38,8 @@ function LoginForm() {
      sessionStorage.setItem("user type", setdatas.user_type);
      sessionStorage.setItem("email", setdatas.email);
      document.title = `${sessionStorage.getItem("username")}`;
-     window.location.reload(false);
+    //  window.location.reload(false);
+     window.location.reload();
      setState("");
      setError("")
     }

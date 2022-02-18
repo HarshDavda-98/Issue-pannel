@@ -3,12 +3,13 @@ import axios from "axios";
 import Updating from "./Updating";
 import ModalForUpdate from "./ModalForUpdate";
 import { useNavigate } from "react-router-dom";
+import {API} from '../../Api'
 function AllIssueList(props) {
   const [updatestate,setupdateState]=useState([]);
   const history = useNavigate();
   const sign = props.lists;
   useEffect(() => {
-    axios.get(`http://localhost:5012/posts/bugs`)
+    axios.get(`${API}posts/bugs`)
     .then((res) => {
       console.log("Here is ", res.data);
       const data = res.data;
@@ -42,8 +43,9 @@ function AllIssueList(props) {
   };
 
   const DeletBug = async (Id) => {
-    await axios.delete(`http://localhost:5012/posts/bugs/${Id}`);
-    history("/adduser");
+    await axios.delete(`${API}posts/bugs/${Id}`);
+    window.location.reload();
+    // history("/adduser");
   };
 
   return (

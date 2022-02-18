@@ -78,7 +78,7 @@ img {
 .example {
   background-color: #eee;
   min-width: 500px !important;
-  max-height: 253px;
+  max-height: 350px;
   border: 5px solid #c9b4b4;
   overflow-y: scroll; /* Add the ability to scroll */
 }

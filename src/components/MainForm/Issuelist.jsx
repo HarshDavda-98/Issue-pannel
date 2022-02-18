@@ -3,11 +3,12 @@ import axios from "axios";
 import Updating from "./Updating";
 import ModalForUpdate from "./ModalForUpdate";
 import {useNavigate} from 'react-router-dom'
-function Issuelist(props) {
+import {API} from '../../Api'
+ function Issuelist(props) {
   const sign = props.lists;
   const history = useNavigate()
   useEffect(() => {
-    axios.get(`http://localhost:5012/posts/bugs`).then((res) => {});
+    axios.get(`${API}posts/bugs`).then((res) => {});
   }, []);
 
   const [showeditor, setShoweditor] = useState(false);
@@ -32,7 +33,7 @@ function Issuelist(props) {
   };
 
   const DeletBug = async (Id) => {
-    await axios.delete(`http://localhost:5012/posts/bugs/${Id}`);
+    await axios.delete(`${API}posts/bugs/${Id}`);
   };
 
   return (

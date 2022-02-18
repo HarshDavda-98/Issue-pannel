@@ -4,7 +4,7 @@ import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import { ActionTypes } from "../../redux/Actiotypes";
 import Editotrs from "../../components/Forms/Editors";
-
+import {API} from '../../Api'
 function ModalForUpdatefunction(props) {
   var issue = sessionStorage.getItem("username");
   console.log(issue);
@@ -33,7 +33,7 @@ function ModalForUpdatefunction(props) {
   const AddUser = (inputstates) => {
     return function (dispatch) {
       axios
-        .put(`http://localhost:5012/posts/bugs/${inputstates.id}`, inputstates)
+        .put(`${API}/posts/bugs/${inputstates.id}`, inputstates)
         .then((response) => {
           dispatch(AddUsers());
           setState("");
